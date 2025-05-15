@@ -13,7 +13,7 @@
       "https://www.googleapis.com/"
     ],
     "oauth2": {
-      "client_id": "495514924584-2f1u828gaq6g73mp60k2dqptnda1q9gq.apps.googleusercontent.com",
+      "client_id": "place holder",
       "scopes": [
         "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify"
