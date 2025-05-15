@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gmail Organizer Options</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #555; }
+        label { display: block; margin-top: 10px; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], select {
+            width: calc(100% - 22px); padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 1em; margin-right: 10px;
+        }
+        button:hover { background-color: #0056b3; }
+        button.danger { background-color: #dc3545; }
+        button.danger:hover { background-color: #c82333; }
+        button.secondary { background-color: #6c757d; }
+        button.secondary:hover { background-color: #545b62; }
+        .rule-item, .spam-item, .suggestion-item {
+            border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 4px; background-color: #f9f9f9;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .tabs { margin-bottom: 20px; border-bottom: 1px solid #ccc; }
+        .tab-button { background: none; border: none; padding: 10px 15px; cursor: pointer; font-size: 1em; }
+        .tab-button.active { border-bottom: 2px solid #007bff; font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        #status { margin-top:15px; padding:10px; background-color:#e9ecef; border-radius:4px; }
+        textarea { width: calc(100% - 22px); padding: 10px; min-height: 80px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gmail Organizer Options</h1>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="rules">Labeling Rules</button>
+            <button class="tab-button" data-tab="spam">Spam Detection</button>
+            <button class="tab-button" data-tab="suggestions">Suggested Labels</button>
+            <button class="tab-button" data-tab="settings">Settings</button>
+        </div>
+
+        <div id="rules" class="tab-content active">
+            <h2>Manage Labeling Rules</h2>
+            <div id="rulesList"></div>
+            <h3>Add New Rule</h3>
+            <label for="ruleType">Condition Type:</label>
+            <select id="ruleType">
+                <option value="sender">Sender Email Contains</option>
+                <option value="subject">Subject Contains</option>
+                <option value="keyword">Keyword in Subject/Body</option>
+            </select>
+            <label for="ruleValue">Condition Value:</label>
+            <input type="text" id="ruleValue" placeholder="e.g., newsletter@example.com or 'Invoice'">
+            <label for="ruleLabelName">Apply Gmail Label:</label>
+            <input type="text" id="ruleLabelName" placeholder="e.g., Newsletters or Finance (case sensitive)">
+            <button id="addRuleBtn">Add Rule</button>
+        </div>
+
+        <div id="spam" class="tab-content">
+            <h2>Spam Detection Settings</h2>
+            <label for="enableSpamDetection">
+                <input type="checkbox" id="enableSpamDetection"> Enable Spam Detection
+            </label>
+            <br>
+            <label for="spamKeywords">Spam Keywords (one per line):</label>
+            <textarea id="spamKeywords" placeholder="win a prize&#10;free money&#10;urgent action"></textarea>
+            <label for="spamSenderDomains">Suspicious Sender Domains (one per line, e.g., shady.biz):</label>
+            <textarea id="spamSenderDomains" placeholder="example.xyz&#10;junk.info"></textarea>
+        </div>
+
+        <div id="suggestions" class="tab-content">
+            <h2>Suggested Labels</h2>
+            <p>Labels suggested based on email patterns. Approving will create the label (if it doesn't exist) and optionally create a rule.</p>
+            <div id="suggestedLabelsList">
+                <p>No suggestions yet, or loading...</p>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-content">
+            <h2>General Settings</h2>
+            <label for="processingInterval">Processing Interval (minutes):</label>
+            <input type="number" id="processingInterval" min="1" value="5">
+
+            <label for="autoCreateLabels">
+                <input type="checkbox" id="autoCreateLabels"> Automatically create rules from approved suggestions
+            </label>
+            <br>
+            <label for="enablePatternDetection">
+                <input type="checkbox" id="enablePatternDetection"> Enable Pattern Detection for Label Suggestions
+            </label>
+            <br><br>
+            <button id="saveSettingsBtn">Save All Settings</button>
+            <button id="forceProcessBtn" class="secondary">Process Emails Now</button>
+            <p id="lastProcessed">Last processed: N/A</p>
+        </div>
+
+        <div id="status"></div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
